@@ -37,21 +37,6 @@ export type Earthquake = {
   }
 }
 
-// export type LocationDetails = {
-//   display_name?: string
-//   address?: {
-//     road?: string
-//     city?: string
-//     county?: string
-//     state?: string
-//     country?: string
-//     postcode?: string
-//     [key: string]: string | undefined
-//   }
-//   lat?: string
-//   lon?: string
-// }
-
 export default function EarthquakeSearch() {
   const searchParams = useSearchParams()
   const router = useRouter()
