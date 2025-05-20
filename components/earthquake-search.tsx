@@ -23,34 +23,18 @@ const EarthquakeMap = dynamic(() => import("@/components/earthquake-map"), {
 
 export type Earthquake = {
   id: string
+  locationDetails?: string
   properties: {
     mag: number
     place: string
     time: number
     url: string
     title: string
-    tsunami: number
     type: string
-    locationDetails?: LocationDetails
   }
   geometry: {
     coordinates: [number, number, number] // [longitude, latitude, depth]
   }
-}
-
-export type LocationDetails = {
-  display_name?: string
-  address?: {
-    road?: string
-    city?: string
-    county?: string
-    state?: string
-    country?: string
-    postcode?: string
-    [key: string]: string | undefined
-  }
-  lat?: string
-  lon?: string
 }
 
 export default function EarthquakeSearch() {
@@ -106,7 +90,7 @@ export default function EarthquakeSearch() {
       // Call server action to fetch earthquake data
       const data = await searchEarthquakes(latitude, longitude, maxRadius, limit)
       console.log("Received earthquakes:", data.length)
-      console.log("First earthquake:", data[0]?.id, "Has location details:", !!data[0]?.properties.locationDetails)
+      console.log("First earthquake:", data[0]?.id, "Has location details:", !!data[0]?.locationDetails)
       setEarthquakes(data)
       setHasSearched(true)
     } catch (error) {
@@ -310,13 +294,8 @@ export default function EarthquakeSearch() {
           {earthquakes.length > 0 ? (
             <div className="space-y-3">
               {earthquakes.map((quake) => {
-                // Check if location details exist and have content
-                const hasLocationDetails =
-                  quake.properties.locationDetails &&
-                  (quake.properties.locationDetails.display_name ||
-                    (quake.properties.locationDetails.address &&
-                      Object.keys(quake.properties.locationDetails.address).length > 0))
-
+               const hasLocationDetails =
+                  quake.locationDetails ? quake.locationDetails : "No location details"
                 return (
                   <Card key={quake.id}>
                     <CardContent className="p-4">
@@ -339,9 +318,6 @@ export default function EarthquakeSearch() {
                           >
                             Magnitude {quake.properties.mag.toFixed(1)}
                           </span>
-                          {quake.properties.tsunami === 1 && (
-                            <span className="block mt-1 text-xs text-red-500 font-semibold">Tsunami Alert</span>
-                          )}
                         </div>
                       </div>
                       <div className="mt-2 text-sm flex justify-between items-center">
@@ -386,25 +362,10 @@ export default function EarthquakeSearch() {
                               <div>
                                 <h4 className="font-medium text-sm">Location Details</h4>
                                 <p className="text-sm text-muted-foreground">
-                                  {quake.properties.locationDetails?.display_name}
+                                  {quake.locationDetails}
                                 </p>
                               </div>
                             </div>
-
-                            {quake.properties.locationDetails?.address &&
-                              Object.keys(quake.properties.locationDetails.address).length > 0 && (
-                                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm mt-2">
-                                  {Object.entries(quake.properties.locationDetails.address).map(
-                                    ([key, value]) =>
-                                      value && (
-                                        <div key={key} className="flex justify-between">
-                                          <span className="font-medium capitalize">{key.replace("_", " ")}:</span>
-                                          <span>{value}</span>
-                                        </div>
-                                      ),
-                                  )}
-                                </div>
-                              )}
                           </div>
                         </div>
                       )}
