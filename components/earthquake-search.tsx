@@ -29,7 +29,6 @@ export type Earthquake = {
     time: number
     url: string
     title: string
-    tsunami: number
     type: string
     locationDetails?: LocationDetails
   }
@@ -339,9 +338,6 @@ export default function EarthquakeSearch() {
                           >
                             Magnitude {quake.properties.mag.toFixed(1)}
                           </span>
-                          {quake.properties.tsunami === 1 && (
-                            <span className="block mt-1 text-xs text-red-500 font-semibold">Tsunami Alert</span>
-                          )}
                         </div>
                       </div>
                       <div className="mt-2 text-sm flex justify-between items-center">
