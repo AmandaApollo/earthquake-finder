@@ -1,5 +1,7 @@
 # earthquake-finder
 
+![GIF of earthquake finder app](https://github.com/AmandaApollo/earthquake-finder/blob/main/map.gif)
+
 A web application to search and visualize recent earthquakes on an interactive map.  
 Users can search by coordinates or place name, view earthquake details, and see contextual location information.
 
