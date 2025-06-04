@@ -7,6 +7,8 @@ Users can search by coordinates or place name, view earthquake details, and see 
 
 This application was primarily generated using v0 and intended to be used as a demo application, not production ready. 
 
+For a full tutorial of this application including how to utilize REST connectors, [head to the blog](https://www.apollographql.com/blog/simplify-your-rest-api-logic-in-react-with-connectors-for-rest-apis-and-graphql).
+
 ## Features
 
 - Search for earthquakes by coordinates or place name
